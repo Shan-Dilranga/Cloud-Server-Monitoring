@@ -1,0 +1,32 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html/moodle
+    ServerName leadserver2.bcstechnology.cloud
+
+    RewriteEngine On
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http
+    RewriteRule .* https://%{HTTP:Host}%{REQUEST_URI} [L,R=permanent]
+
+    Alias "/healthcheck" "/var/www/html/healthcheck.html"
+
+    <Directory /var/www/html/moodle>
+        Options FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    <Directory /var/moodledata>
+        Require all denied
+    </Directory>
+
+    # -------- Grafana Proxy --------
+    ProxyPreserveHost On
+    ProxyPass /grafana http://localhost:3000/grafana
+    ProxyPassReverse /grafana http://localhost:3000/grafana
+    <Location /grafana/>
+        Require all granted
+        ProxyPassReverseCookiePath / /grafana
+    </Location>
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
