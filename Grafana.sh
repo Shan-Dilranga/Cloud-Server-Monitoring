@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Add Grafana APT repo
 sudo apt-get install -y software-properties-common
 sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
@@ -12,3 +14,4 @@ sudo apt install grafana -y
 #Start Grafana
 sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
+
