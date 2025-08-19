@@ -11,37 +11,117 @@ This repo is about provisioning AWS EC2 server and related services and monitori
 # Steps
 ## 1.Provision the infrastructure in AWS as shown in the diagram
 ## 2. Configure Prometheus and Node exporter
+
 Download the 'PrometheusNodeExporter' script file and move it to the EC2 server and run it.
+
 In security group that attached to EC2,
   Allow 9090 port for Prometheus
+  
   Allow 9100 port for Node Exporter
 
 ## 3. Install Grafana
 Download Grafana.sh script and move it to the EC2 and run it.
+
 Check the status of Grafana using, "sudo systemctl status grafana-server" command
+
 In security group that attached to EC2,
   Allow 3000 port for Grafana
 
 Open the Browser and run,
-http://<EC2-Public-IP>:3000
+http://<"EC2-Public-IP">:3000
 
 Default credentials:
-username: admin
-password: admin (you’ll be asked to set a new password)
+  username: admin
+  
+  password: admin (you’ll be asked to set a new password)
 
 ## 4. Add Prometheus as a Data Source
 
-Login to Grafana (http://<EC2-Public-IP>:3000)
+Login to Grafana (http://<"EC2-Public-IP">:3000)
+
 Go to Configuration → Data Sources → Add data source
+
 Select Prometheus
+
 In the URL, enter:
   http://localhost:9090
+  
 Click Save & Test
 
 ## 5. Import Node Exporter Dashboard
 
 Grafana has prebuilt dashboards for Node Exporter.
+
 In Grafana → left menu → Dashboards → Import
+
 Enter this dashboard ID: 1860 (popular Node Exporter Full) Or use official ones: 13978 / 14513
+
 Select your Prometheus data source and import.
+
 You’ll now see CPU, memory, disk, network, and more stats from your EC2 in a nice dashboard 🚀
+
+## 6. Setup Grafana with reverse proxy in Apache2 for secure login
+### After setting up, you will be able to loging Grafana with using "http://yourdomain.com/grafana"
+
+### 6.1 Enable Apache Proxy Modules
+Run below commands,
+
+```bash
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod headers
+sudo a2enmod rewrite
+sudo a2enmod ssl
+```
+
+Then Restart Apche using -> ```sudo systemctl restart apache2```
+
+### 6.2 Create Apache Virtual Host for Grafana
+### If you don't have a conf file inside "/etc/apache2/sites-available"   
+Then create a conf file using sudo nano /etc/apache2/sites-available/grafana.conf  
+Add all the content of grafana.conf file.
+
+### IF you already have a conf file in this location -> "/etc/apache2/sites-available",  
+Then add below line to that conf file between "VritualHost" tags.
+
+```bash
+  # -------- Grafana Proxy --------
+ProxyPreserveHost On
+ProxyRequests Off
+
+ProxyPass /grafana http://localhost:3000/grafana
+ProxyPassReverse /grafana http://localhost:3000/grafana
+
+<Location /grafana/>
+    Require all granted
+    ProxyPassReverseCookiePath / /grafana
+</Location>
+```
+Save & Exit.
+
+### 6.3 Adjust Grafana Config (important for reverse proxy)
+Edite Grafana Config:  
+```bash
+sudo nano /etc/grafana/grafana.ini
+```
+### Find and change belwo lines:  
+[server]  
+protocol = http  
+http_addr =  
+http_port = 3000  
+domain = YourDomain.com  
+root_url = https://YourDomain.com/grafana  
+serve_from_sub_path = true  
+
+## Note: If there is a ";" infront of above lines, please remove that ";" from above lines only!
+
+
+### 6.4 Restart services
+```bash
+sudo systemctl restart grafana-server
+sudo systemctl reload apache2
+```
+
+## Now you can access to Grafana useing "https://yourdomain.com/grafana"  
+### This will give you a way to access Grafana without using public IP Address.
+
