@@ -1,5 +1,5 @@
 # Cloud-Server-Monitoring
-This repo is about provisioning AWS EC2 server and related services and monitoring it using Promethius and  Grafana while testing the load using Apache Jmeter
+This repo is about provisioning AWS EC2 Ubuntu server and related services and monitoring it using Promethius and  Grafana while testing the load using Apache Jmeter
 
 ## Architecture Diagram
 
@@ -10,6 +10,7 @@ This repo is about provisioning AWS EC2 server and related services and monitori
 
 # Steps
 ## 1.Provision the infrastructure in AWS as shown in the diagram
+I configured Moodle open-source application inside this EC2. It's not necessary to configure that. If you don't need to configure that, you will not need RDS to provision.
 ## 2. Configure Prometheus and Node exporter
 
 Download the 'PrometheusNodeExporter' script file and move it to the EC2 server and run it.
