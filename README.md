@@ -126,3 +126,25 @@ sudo systemctl reload apache2
 ## Now you can access to Grafana useing "https://yourdomain.com/grafana"  
 ### This will give you a way to access Grafana without using public IP Address.
 
+## 7. configure Apche Jmeter for load testing
+Prerequisites-> Java must be installed on your machine (JDK 8 or higher).  
+you can check if java is installed by running  
+```bash
+java --version
+```
+Download the zip file using this link "https://jmeter.apache.org/download_jmeter.cgi" and extract the zip folder into your program files in C drive.  
+To Run JMeter (GUI mode)  
+On Windows:  
+Navigate to the extracted JMeter folder.  
+Go to the bin folder.  
+Double-click on jmeter.bat (Or right-click → Open with Command Prompt)  
+
+✅ After Launching JMeter You’ll see the Apache JMeter GUI.  
+From there you can:  
+Create a Test Plan  
+Add a Thread Group  
+Add HTTP Request Samplers  
+Add Listeners to view the results  
+Click Start (Green triangle) to run the test  
+
+While testing, you can watch the Grafana dashboard to monitor the EC2 server.
