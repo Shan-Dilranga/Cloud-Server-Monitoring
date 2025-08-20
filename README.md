@@ -157,4 +157,5 @@ While testing, you can watch the Grafana dashboard to monitor the EC2 server.
 
 <img width="1900" height="904" alt="Screenshot (262)copy" src="https://github.com/user-attachments/assets/8c03b561-cf5f-4222-8ba1-47f2ded4a2f8" />
 
-<img width="1920" height="1080" alt="Screenshot (261)" src="https://github.com/user-attachments/assets/8f95abb7-b033-4e63-ab3b-94c19bc6e2ee" />
+<img width="1920" height="973" alt="Screenshot (261)" src="https://github.com/user-attachments/assets/3dd979fe-4e9c-4fd3-9812-e9ba7a163031" />
+
