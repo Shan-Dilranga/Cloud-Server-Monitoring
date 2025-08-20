@@ -148,3 +148,13 @@ Add Listeners to view the results
 Click Start (Green triangle) to run the test  
 
 While testing, you can watch the Grafana dashboard to monitor the EC2 server.
+
+## Summary Report of Load testing using Jmeter  
+
+<img width="1513" height="838" alt="Screenshot (262)" src="https://github.com/user-attachments/assets/58ade8b4-f45f-4c78-917e-b18b9fd9cba5" />
+
+## Snaps of Grafana Dashboard for Node Exporter
+
+<img width="1900" height="904" alt="Screenshot (262)copy" src="https://github.com/user-attachments/assets/8c03b561-cf5f-4222-8ba1-47f2ded4a2f8" />
+
+<img width="1920" height="1080" alt="Screenshot (261)" src="https://github.com/user-attachments/assets/8f95abb7-b033-4e63-ab3b-94c19bc6e2ee" />
